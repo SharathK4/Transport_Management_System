@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: tms-backend
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5433/tms_db
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.tms: DEBUG
+    org.hibernate.SQL: DEBUG
