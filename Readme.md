@@ -20,6 +20,10 @@ A Spring Boot–based backend for a Transport Management System that models real
 
 ## Overview
 
+<p align="center">
+  <img src="assets/Demo.gif" alt="Demo" width="800">
+</p>
+
 This backend implements the core logistics workflows for a Transport Management System:
 
 - Shippers create **loads**
@@ -134,7 +138,7 @@ This diagram also reflects the core database schema and relationships between `L
 
 ## Business Rules
 
-### Rule 1: Capacity Validation ✅
+### Rule 1: Capacity Validation 
 
 * A transporter can **only bid** if:
   * `trucksOffered ≤ availableTrucks` for the requested `truckType`
@@ -143,7 +147,7 @@ This diagram also reflects the core database schema and relationships between `L
 * When a booking is **cancelled**:
   * `allocatedTrucks` are **restored** back to the transporter's `availableTrucks`
 
-### Rule 2: Load Status Transitions ✅
+### Rule 2: Load Status Transitions 
 
 * `POSTED → OPEN_FOR_BIDS` when the **first bid** is received
 * `OPEN_FOR_BIDS → BOOKED` when the load is **fully allocated**
@@ -154,7 +158,7 @@ Additional guards:
 * ❌ Cannot bid on `CANCELLED` or `BOOKED` loads
 * ❌ Cannot cancel a load that is already `BOOKED` (enforced via service logic and custom exceptions)
 
-### Rule 3: Multi-Truck Allocation ✅
+### Rule 3: Multi-Truck Allocation 
 
 * If `noOfTrucks > 1`, multiple bookings are allowed for the same load.
 * The system tracks:
@@ -166,14 +170,14 @@ Additional guards:
   remainingTrucks == 0
   ```
 
-### Rule 4: Concurrent Booking Prevention (Optimistic Locking) ✅
+### Rule 4: Concurrent Booking Prevention (Optimistic Locking) 
 
 * `Load` entity has a `@Version` field.
 * When two transactions try to allocate trucks simultaneously:
   * The **first** succeeds.
   * The **second** hits an `OptimisticLockException` → wrapped as `LoadAlreadyBookedException` / HTTP 409 (Conflict).
 
-### Rule 5: Best Bid Calculation ✅
+### Rule 5: Best Bid Calculation 
 
 * For a given load, **best bids** are computed via:
   ```text
@@ -437,6 +441,3 @@ backend/
     * `LoadAlreadyBookedException` (wrapping optimistic lock)
     * `ResourceNotFoundException`
 
----
-
-**Note for Reviewers**: This README includes schema diagram, API documentation (Swagger/Postman), and test coverage screenshot locations as requested.
