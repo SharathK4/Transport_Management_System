@@ -21,7 +21,7 @@ A Spring Boot–based backend for a Transport Management System that models real
 ## Overview
 
 <p align="center">
-  <img src="assets/Demo.gif" alt="Demo" width="800">
+  <img src="assets/demo.gif" alt="Demo" width="800">
 </p>
 
 This backend implements the core logistics workflows for a Transport Management System:
